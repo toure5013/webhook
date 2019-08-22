@@ -14,8 +14,7 @@ bodyParser = require("body-parser"),
 methodOverride = require("method-override"),
 logger = require("morgan"),
 http = require("http"),
-errorHandler = require("errorhandler")
-;
+errorHandler = require("errorhandler");
 
 //Create Server
 var server = http.createServer(app);
