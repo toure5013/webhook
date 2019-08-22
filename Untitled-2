@@ -1,0 +1,75 @@
+'use strict';
+//Parameters
+
+
+
+
+
+//===========================Modules exports==========================
+var     
+bodyParser = require("body-parser"),
+methodOverride = require("method-override"),
+logger = require("morgan"),
+errorHandler = require("errorhandler")
+;
+
+//Server module
+// var fs = require('fs');
+// var http = require("http");
+// var https = require('https');
+// var express = require("express");
+// var app = express();
+
+//config of https
+var credentials = {key: privateKey, cert: certificate};
+var privateKey  = fs.readFileSync('./sslcert/server.key', 'utf8');
+var certificate = fs.readFileSync('./sslcert/server.cert', 'utf8');
+
+//Create Server
+var server = http.createServer(app);
+var httpsServer = https.createServer(credentials, app);
+
+
+
+//HTTPS MODULE
+const httpsLocalhost = require("https-localhost");
+const app = httpsLocalhost();
+const port = 443;
+// app is an express app, do what you usually do with express
+
+
+//My libraries
+var
+routes = require('./server/routes')
+;
+
+const nodePort = 8088 || process.env.PORT;
+
+//============================Configuration our server==================
+app.use(bodyParser.json());
+app.use(methodOverride());
+
+switch (app.get('env')){
+    case 'development':
+        app.use(logger('combined'));
+        app.use(errorHandler(
+            {
+                dumExceptions : true,
+                showStack : true
+            }
+        ));//We can put production case
+}
+
+routes.configRoutes(app, server);
+
+
+
+//=============================Start server=========================
+server.listen(nodePort);
+httpsServer.listen(8443);
+apphttps.listen(port)
+console.log(
+    'express server listening on port %d in %s mode',
+    nodePort,
+    app.settings.env
+);
