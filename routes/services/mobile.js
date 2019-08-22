@@ -33,21 +33,32 @@ configMobileRoutes = function(app, server, recastMemory, recastIntents,  recastE
 
     //get all data sent by user from recast
     app.all("/*", function(request, response, next) {
-      //Get all variable value from recast
-      if(request.body.conversation.memory){
-        recastMemory = request.body.conversation.memory;    
-      }
-      //Get id from recast
-      //recastConversationId = request.body.conversation.Id;
-      //Get intent from recast
-  
-      if(request.body.nlp.intents){
-        recastIntents = request.body.nlp.intents;  
-      }
-      
-      if(request.body.nlp.entities){
-        recastEntities = request.body.nlp.entities;
-      }
+ 
+    try{
+        //Get all variable value from recast
+        if(request.body.conversation.memory){
+          recastMemory = request.body.conversation.memory;    
+        }
+        //Get id from recast
+        //recastConversationId = request.body.conversation.Id;
+        //Get intent from recast
+
+        if(request.body.nlp.intents){
+          recastIntents = request.body.nlp.intents;  
+        }
+
+        if(request.body.nlp.entities){
+          recastEntities = request.body.nlp.entities;
+        }
+          //console.log(request.body);
+
+    }catch(e){
+        response.send({  
+        "Error" : "Out of Recast",
+        "Message" : "Memory is undefined  : " + e
+      })
+    }
+    
   
       next();
     });
